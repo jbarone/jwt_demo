@@ -1,0 +1,44 @@
+services:
+  simple:
+    build:
+      context: .
+      dockerfile_inline: |
+        FROM python:3.11-slim-buster
+        WORKDIR /app
+        COPY ./simple.py ./app.py
+        COPY ./utils.py .
+        COPY ./templates/ templates
+        COPY ./static/dist/ static/dist
+        RUN pip3 install Flask Flask-Assets pyjwt cryptography
+        CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
+    ports:
+      - 5000:5000
+  juggle:
+    build:
+      context: .
+      dockerfile_inline: |
+        FROM python:3.11-slim-buster
+        WORKDIR /app
+        COPY ./rsademo.py ./app.py
+        COPY ./utils.py .
+        COPY ./templates/ templates
+        COPY ./static/dist/ static/dist
+        RUN pip3 install Flask Flask-Assets pyjwt cryptography
+        CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0", "--port=5001"]
+    ports:
+      - 5001:5001
+  sql:
+    build:
+      context: .
+      dockerfile_inline: |
+        FROM python:3.11-slim-buster
+        WORKDIR /app
+        COPY ./sql.py ./app.py
+        COPY ./init_db.py ./utils.py .
+        COPY ./templates/ templates
+        COPY ./static/dist/ static/dist
+        RUN pip3 install Flask Flask-Assets pyjwt cryptography
+        RUN python3 init_db.py
+        CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0", "--port=5002"]
+    ports:
+      - 5002:5002

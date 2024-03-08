@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+</head>
+<body>
+    <h2>Login Page</h2>
+    <div id="error-message" style="color: red;"></div>
+    <form id="login-form">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required><br>
+        <button type="button" onclick="login()">Login</button>
+    </form>
+
+    <script>
+        async function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            const response = await fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `username=${username}&password=${password}`,
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                document.cookie = `access_token=${data.access_token}`;
+                window.location.href = '/protected';
+            } else {
+                document.getElementById('error-message').innerText = data.msg;
+            }
+        }
+    </script>
+</body>
+</html>

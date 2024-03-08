@@ -1,0 +1,5 @@
+{
+    "kty": "oct",
+    "kid": "simple",
+    "k": "bXlzZWNyZXQ"
+}
