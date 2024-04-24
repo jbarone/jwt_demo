@@ -1,5 +1,5 @@
 from flask import Flask
-from flask_assets import Environment, Bundle
+from flask_assets import Bundle, Environment
 from datetime import datetime, timedelta, timezone
 import uuid
 import hashlib
