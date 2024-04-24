@@ -1,12 +1,17 @@
 from flask import (
     Flask,
+    make_response,
     render_template,
     request,
     redirect,
     url_for,
-    make_response,
 )
-from utils import create_access_token, setup_assets, get_user, valid_user
+from utils import (
+    create_access_token,
+    get_user,
+    setup_assets,
+    valid_user,
+)
 from typing import Any
 from flask.typing import ResponseReturnValue
 
@@ -16,6 +21,7 @@ app.config["SECRET"] = "mysecret"
 app.config["ALGORITHMS"] = ["none", "HS256"]
 app.config["DEFAULT_ALGORITHM"] = "HS256"
 setup_assets(app)
+
 
 def validate_user() -> Any:
     return get_user(

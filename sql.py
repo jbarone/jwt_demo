@@ -1,12 +1,17 @@
 from flask import (
     Flask,
+    make_response,
     render_template,
     request,
     redirect,
     url_for,
-    make_response,
 )
-from utils import create_access_token, setup_assets, get_user, valid_user
+from utils import (
+    create_access_token,
+    get_user,
+    setup_assets,
+    valid_user,
+)
 import sqlite3
 import jwt
 from typing import Any
